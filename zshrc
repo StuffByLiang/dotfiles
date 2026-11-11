@@ -1,9 +1,19 @@
 # ---- tmux autostart ----
 # Must run BEFORE the p10k instant prompt (which hijacks the terminal during startup).
 # Only in interactive iTerm shells, not inside tmux, not in VS Code / scripts.
-# Attaches to an existing session or starts one. Detaching (Ctrl-a d) leaves you in a plain shell.
+# All tabs share the windows of one session, "main", but each tab can view a different window:
+#   - first tab creates "main"
+#   - later tabs create a throwaway session grouped with "main" (named main-1, main-2…)
+#     that is deleted when the tab closes. The windows themselves live on in "main".
+# Detaching (Ctrl-a d) leaves you in a plain shell.
 if [[ -o interactive && "$TERM_PROGRAM" == "iTerm.app" && -z "$TMUX" ]] && command -v tmux >/dev/null; then
-  tmux attach 2>/dev/null || tmux new-session
+  if tmux has-session -t "=main" 2>/dev/null; then
+    _n=1; while tmux has-session -t "=main-$_n" 2>/dev/null; do (( _n++ )); done
+    tmux new-session -t "=main" -s "main-$_n" \; set-option destroy-unattached on
+    unset _n
+  else
+    tmux new-session -s main
+  fi
 fi
 
 # Powerlevel10k instant prompt — keep near the top.
