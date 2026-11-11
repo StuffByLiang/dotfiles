@@ -1,3 +1,11 @@
+# ---- tmux autostart ----
+# Must run BEFORE the p10k instant prompt (which hijacks the terminal during startup).
+# Only in interactive iTerm shells, not inside tmux, not in VS Code / scripts.
+# Attaches to an existing session or starts one. Detaching (Ctrl-a d) leaves you in a plain shell.
+if [[ -o interactive && "$TERM_PROGRAM" == "iTerm.app" && -z "$TMUX" ]] && command -v tmux >/dev/null; then
+  tmux attach 2>/dev/null || tmux new-session
+fi
+
 # Powerlevel10k instant prompt — keep near the top.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -18,16 +26,7 @@ plugins=(
   zsh-syntax-highlighting   # must be last
 )
 
-# ---- tmux autostart ----
-# Only in interactive iTerm shells (not VS Code, scripts, etc.).
-# Attaches to the existing session if there is one, otherwise creates one.
-if [[ -o interactive && "$TERM_PROGRAM" == "iTerm.app" && -z "$TMUX" ]]; then
-  ZSH_TMUX_AUTOSTART=true
-else
-  ZSH_TMUX_AUTOSTART=false
-fi
-ZSH_TMUX_AUTOCONNECT=true
-ZSH_TMUX_AUTOQUIT=false     # detaching (Ctrl-a d) drops you into a plain shell instead of closing the tab
+ZSH_TMUX_AUTOSTART=false   # handled at the top of this file instead
 ZSH_TMUX_FIXTERM=false      # let ~/.tmux.conf decide the TERM
 
 source $ZSH/oh-my-zsh.sh
