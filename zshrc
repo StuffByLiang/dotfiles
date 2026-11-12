@@ -1,21 +1,3 @@
-# ---- tmux autostart ----
-# Must run BEFORE the p10k instant prompt (which hijacks the terminal during startup).
-# Only in interactive iTerm shells, not inside tmux, not in VS Code / scripts.
-# All tabs share the windows of one session, "main", but each tab can view a different window:
-#   - first tab creates "main"
-#   - later tabs create a throwaway session grouped with "main" (named main-1, main-2…)
-#     that is deleted when the tab closes. The windows themselves live on in "main".
-# Detaching (Ctrl-b d) leaves you in a plain shell.
-if [[ -o interactive && "$TERM_PROGRAM" == "iTerm.app" && -z "$TMUX" ]] && command -v tmux >/dev/null; then
-  if tmux has-session -t "=main" 2>/dev/null; then
-    _n=1; while tmux has-session -t "=main-$_n" 2>/dev/null; do (( _n++ )); done
-    tmux new-session -t "=main" -s "main-$_n" \; set-option destroy-unattached on
-    unset _n
-  else
-    tmux new-session -s main
-  fi
-fi
-
 # Powerlevel10k instant prompt — keep near the top.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -36,7 +18,7 @@ plugins=(
   zsh-syntax-highlighting   # must be last
 )
 
-ZSH_TMUX_AUTOSTART=false   # handled at the top of this file instead
+ZSH_TMUX_AUTOSTART=false   # no auto-start; run `tmux` yourself
 ZSH_TMUX_FIXTERM=false      # let ~/.tmux.conf decide the TERM
 
 source $ZSH/oh-my-zsh.sh
@@ -65,12 +47,12 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-# >>> grok installer >>>
-# export PATH="$HOME/.grok/bin:$PATH"
-# fpath=(~/.grok/completions/zsh $fpath)
-# autoload -Uz compinit && compinit -C
-# <<< grok installer <<<
+# ---- AI CLIs ----
+alias claude='claude --dangerously-skip-permissions'
+alias codex='codex --dangerously-bypass-approvals-and-sandbox'
+export HF_TOKEN=$(security find-generic-password -s huggingface -w 2>/dev/null)   # token lives in Keychain
 
-
-# Added by Antigravity CLI installer
-# export PATH="/Users/liang/.local/bin:$PATH"
+# grok
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C

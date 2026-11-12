@@ -34,6 +34,8 @@ let mapleader = " "
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
+inoremap jk <Esc>
+inoremap kj <Esc>
 " move between splits with ctrl+hjkl
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j

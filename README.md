@@ -37,7 +37,7 @@ Because the files are symlinks, editing `~/.zshrc` edits the repo. Commit and pu
 |---|---|
 | Caps Lock tap / hold | Esc / Ctrl (Karabiner) |
 
-### tmux (starts automatically in iTerm; prefix is `Ctrl-b`)
+### tmux (run `tmux` to start; prefix is `Ctrl-b`)
 | Key | Does |
 |---|---|
 | `Opt -` / `Opt \|` | split top-bottom / side-by-side |
