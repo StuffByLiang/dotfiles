@@ -13,8 +13,6 @@ git clone https://github.com/StuffByLiang/dotfiles.git ~/dotfiles
 ~/dotfiles/install.sh
 ```
 
-The repo is private, so `git clone` will ask you to sign in. Either install `gh` first (`brew install gh && gh auth login`) and use `gh repo clone StuffByLiang/dotfiles ~/dotfiles`, or make the repo public.
-
 `install.sh` is safe to re-run. It:
 
 1. Installs Homebrew (asks for your password) and everything in `Brewfile`
@@ -39,7 +37,7 @@ Because the files are symlinks, editing `~/.zshrc` edits the repo. Commit and pu
 |---|---|
 | Caps Lock tap / hold | Esc / Ctrl (Karabiner) |
 
-### tmux (starts automatically in iTerm; prefix is `Ctrl-a`)
+### tmux (starts automatically in iTerm; prefix is `Ctrl-b`)
 | Key | Does |
 |---|---|
 | `Opt -` / `Opt \|` | split top-bottom / side-by-side |
@@ -50,12 +48,15 @@ Because the files are symlinks, editing `~/.zshrc` edits the repo. Commit and pu
 | `Opt n` | new window |
 | `Opt ,` | rename window |
 | `Opt z` | zoom pane |
+| `Opt s` | scroll / copy mode (same as `Ctrl-b [`; `Opt s` or `q` to exit) |
 | `Opt x` | type into all panes at once |
 | `Opt w` | kill pane (asks first) |
 | `Ctrl h j k l` | move across tmux panes *and* vim splits |
-| `Ctrl-a r` | reload config |
-| `Ctrl-a d` | detach |
-| `Ctrl-a [` | copy mode (`v` select, `y` copy) |
+| `Ctrl-b r` | reload config |
+| `Ctrl-b d` | detach |
+| `Ctrl-b [` | copy mode |
+
+**In scroll / copy mode (vim keys):** `h j k l` move, `Ctrl-u` / `Ctrl-d` half page, `g` / `G` top / bottom, `/` `?` search (`n` / `N` next / prev), `v` select, `V` select line, `Ctrl-v` block select, `y` copy to the macOS clipboard, `Esc` clear selection. The tmux command prompt (`Ctrl-b :`) also uses vim keys.
 
 ### Shell
 | Key / command | Does |

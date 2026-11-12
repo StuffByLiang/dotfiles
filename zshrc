@@ -5,7 +5,7 @@
 #   - first tab creates "main"
 #   - later tabs create a throwaway session grouped with "main" (named main-1, main-2…)
 #     that is deleted when the tab closes. The windows themselves live on in "main".
-# Detaching (Ctrl-a d) leaves you in a plain shell.
+# Detaching (Ctrl-b d) leaves you in a plain shell.
 if [[ -o interactive && "$TERM_PROGRAM" == "iTerm.app" && -z "$TMUX" ]] && command -v tmux >/dev/null; then
   if tmux has-session -t "=main" 2>/dev/null; then
     _n=1; while tmux has-session -t "=main-$_n" 2>/dev/null; do (( _n++ )); done
@@ -64,3 +64,13 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+# >>> grok installer >>>
+# export PATH="$HOME/.grok/bin:$PATH"
+# fpath=(~/.grok/completions/zsh $fpath)
+# autoload -Uz compinit && compinit -C
+# <<< grok installer <<<
+
+
+# Added by Antigravity CLI installer
+# export PATH="/Users/liang/.local/bin:$PATH"
