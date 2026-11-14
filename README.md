@@ -17,7 +17,7 @@ git clone https://github.com/StuffByLiang/dotfiles.git ~/dotfiles
 
 1. Installs Homebrew (asks for your password) and everything in `Brewfile`
 2. Installs Oh My Zsh, Powerlevel10k, zsh-autosuggestions, zsh-syntax-highlighting
-3. Symlinks `zshrc`, `p10k.zsh`, `tmux.conf`, `vimrc` and `karabiner/` into place. Existing files are moved to `~/.dotfiles-backup/<timestamp>/`
+3. Symlinks `zshrc`, `p10k.zsh`, `tmux.conf`, `vimrc`, `karabiner/` and each skill in `claude/skills/` (into `~/.claude/skills/`) into place. Existing files are moved to `~/.dotfiles-backup/<timestamp>/`. Also clones my private study notes into `~/learning`.
 4. Installs vim plugins
 5. Sets fast key repeat and turns off press-and-hold accents
 6. Sets the iTerm font and Left Option = Esc+ (only if iTerm is closed)
@@ -29,6 +29,20 @@ git clone https://github.com/StuffByLiang/dotfiles.git ~/dotfiles
 - If iTerm was open during install: Settings → Profiles → Text → Font **MesloLGS NF**, and Keys → General → Left Option key **Esc+**
 
 Because the files are symlinks, editing `~/.zshrc` edits the repo. Commit and push to save changes.
+
+## Learning workflow (Claude Code + Socratic tutor)
+
+How I learn new topics (videos, books, papers) with Claude Code:
+
+1. **Say "teach me X" / "tutor me on X"** → the `socratic-tutor` skill runs: a short diagnostic, a 0–5 skill map, then one question at a time. It explains directly only after 2–3 failed attempts. Say "just tell me" to skip questioning for one question.
+2. **Notes persist automatically** in `~/learning/` (private repo [`StuffByLiang/learning`](https://github.com/StuffByLiang/learning), synced between laptop and Mac mini):
+   - `INDEX.md` lists every topic and where I left off
+   - `<topic>.md` holds the skill map, key ideas, **misconceptions I had** (most useful for review), review queue, next up
+   - **My summary** is written by me, never by Claude (writing it is part of learning)
+3. **Resume anytime:** "let's continue <topic>". It pulls the notes and opens with spaced-review questions before new material.
+4. Commands: `save` (write notes now, which matters only before closing the terminal abruptly), `show progress`, `harder` / `easier`, `just tell me`.
+
+The skill is adapted from [janestreet/agent_skills](https://github.com/janestreet/agent_skills) (MIT), with persistent notes and git sync added. Edit it in `claude/skills/socratic-tutor/SKILL.md`. It's symlinked, so changes apply immediately. Then commit.
 
 ## Cheat sheet
 

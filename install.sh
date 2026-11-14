@@ -50,6 +50,18 @@ link tmux.conf "$HOME/.tmux.conf"
 link vimrc     "$HOME/.vimrc"
 link karabiner "$HOME/.config/karabiner"
 
+# 4b. Claude Code skills + private study notes (see README "Learning workflow")
+say "Linking Claude Code skills"
+for skill in "$DOTFILES"/claude/skills/*/; do
+  name="$(basename "$skill")"
+  link "claude/skills/$name" "$HOME/.claude/skills/$name"
+done
+if [[ ! -d "$HOME/learning/.git" ]]; then
+  say "Cloning private study notes into ~/learning"
+  git clone -q https://github.com/StuffByLiang/learning.git "$HOME/learning" \
+    || echo "(couldn't clone — run 'gh auth login', then re-run this script)"
+fi
+
 # 5. Vim plugins
 say "Installing vim plugins"
 mkdir -p "$HOME/.vim/undo"
